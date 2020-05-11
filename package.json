@@ -1,0 +1,38 @@
+{
+  "name": "ahj-homeworks-sse-ws",
+  "version": "1.0.0",
+  "description": "sse-ws",
+  "main": "server.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node server.js",
+    "watch": "forever -w server.js"
+  },
+  "engines": {
+    "node": "11.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarolineFell/ahj-homeworks-sse-ws-server-task3.git"
+  },
+  "keywords": [
+    "sse-ws"
+  ],
+  "author": "CarolineFell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CarolineFell/ahj-homeworks-sse-ws-server-task3/issues"
+  },
+  "homepage": "https://github.com/CarolineFell/ahj-homeworks-sse-ws-server-task3#readme",
+  "dependencies": {
+    "forever": "^2.0.0",
+    "http-event-stream": "^0.2.0",
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-router": "^8.0.8",
+    "koa-static": "^5.0.0",
+    "npm": "^6.14.4",
+    "uuid": "^8.0.0",
+    "ws": "^7.2.5"
+  }
+}
