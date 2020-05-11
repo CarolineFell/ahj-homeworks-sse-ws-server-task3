@@ -52,7 +52,7 @@ const wsServer = new WS.Server({ server });
 
 const instance = [];
 
-router.get('/instances', async (ctx, next) => {
+router.get('/inst', async (ctx, next) => {
   console.log('get index');
   ctx.response.body = instance;
 });
@@ -71,11 +71,11 @@ function sendMessage(id, itemMsg) {
   }
 }
 
-router.post('/instances', async (ctx, next) => {
-  console.log('add instances');
+router.post('/inst', async (ctx, next) => {
+  console.log('add inst');
   const id = uuid.v4();
 
-  sendMessage(id, 'Create command received');
+  sendMessage(id, 'Create Command received');
 
   setTimeout(() => {
     instance.push({
@@ -83,7 +83,7 @@ router.post('/instances', async (ctx, next) => {
       state: 'stopped',
     });
 
-  sendMessage(id, 'Server created');
+  sendMessage(id, 'Created');
   }, 5000);
   console.log('added');
   ctx.response.body = {
@@ -91,7 +91,7 @@ router.post('/instances', async (ctx, next) => {
   };
 });
 
-router.patch('/instances/:id', async (ctx, next) => {
+router.patch('/inst/:id', async (ctx, next) => {
   sendMessage(ctx.params.id, 'Change State received');
 
   const index = instance.findIndex((item) => item.id === ctx.params.id);
@@ -108,14 +108,14 @@ router.patch('/instances/:id', async (ctx, next) => {
   }
 });
 
-router.delete('/insancest/:id', async (ctx, next) => {
+router.delete('/inst/:id', async (ctx, next) => {
   
   const index = instance.findIndex((item) => {
     return item.id === ctx.params.id;
   });
   console.log(index);
   if (index !== -1) {
-    sendMessage(ctx.params.id, 'Delete instace received');
+    sendMessage(ctx.params.id, 'Delete Instace received');
     setTimeout(() => {
       instance.splice(index, 1);
       sendMessage(ctx.params.id, 'Instance deleted');
@@ -127,10 +127,11 @@ router.delete('/insancest/:id', async (ctx, next) => {
 });
 
 wsServer.on('connection', (ws, req) => {
-  console.log('connection');
+  console.log('Connected to server');
 
   ws.on('message', msg => {
     console.log('msg');
+  
     [...wsServer.clients]
     .filter(o => {
       return o.readyState === WS.OPEN;
@@ -139,7 +140,8 @@ wsServer.on('connection', (ws, req) => {
   });
 
   ws.on('close', msg => {
-    console.log('close');
+    console.log('Closed server');
+  
     [...wsServer.clients]
     .filter(o => {
       return o.readyState === WS.OPEN;
@@ -148,7 +150,7 @@ wsServer.on('connection', (ws, req) => {
   });
 
   ws.on('change', msg => {
-    console.log('change');
+    console.log('Instance changed');
   });
 
   [...wsServer.clients]
